@@ -9,6 +9,7 @@ By the end of this lab, you will:
 3. Use GitHub Codespaces to run Python code directly in the browser (no local setup required).
 4. Write and run simple Python programs using input() and print().
 
+___  
 
 ### Part 1: Create Your GitHub Account
 
@@ -17,6 +18,8 @@ By the end of this lab, you will:
 3. Choose a username you’re comfortable using throughout your degree (avoid joke names).
 4. Use a strong password (consider a password manager).
 5. Verify your email address by clicking the link GitHub sends you.
+
+___  
 
 ### Part 2: Verify as a Student
 
@@ -32,92 +35,37 @@ By the end of this lab, you will:
 
 > 💡 You can continue with the rest of this lab without waiting for approval.
 
+___  
 
-All of the lab activities and in-class demos will be completed using the setup outlined below, however you are free to use any setup and tools you prefer. 
-> :warning: I won't be troubleshooting any issues on different setups, outside of the suggested lab environment. 
-
-___
-
-## Recommended Lab Setup:
-
-1. VirtualBox hypervisor 
-2. Kali Linux VM  
--- recommended, but any modern linux VM should be fine
-___
-
-Download:
-VirtualBox: [https://www.virtualbox.org/wiki/Downloads](https://www.virtualbox.org/wiki/Downloads) (Download the package for your own OS)  
-Kali Linux image (latest version): [https://www.kali.org/get-kali/](https://www.kali.org/get-kali/) (For most students, I'm recommending the pre-built virtual box image)  
-
-
-## Setup Instructions 
-
-
-1. Install VirtualBox - Run the downloaded installer and follow the on-screen instructions.
-   
-2. Extract the Kali VirtualBox image.
-> ⚠️ The downloaded image file is a 7zip compressed archive, so you'll first need to extract the VirtualBox image before importing to Virtualbox.  
-   
-   -- On windows you can download the offical 7zip app to extract the image. [https://www.7-zip.org/](https://www.7-zip.org/)  
-   -- On Linux you can type ```7z x filename.7z```  
-   -- On Mac the default archive tool should be able to extract the image.  
-
-4. Start VirtualBox and select ‘Add’. We then navigate to the location our VM is downloaded and find the .vbox file.
-5. You can change any of the settings to suit your own system, and then start the VM.
-   > 💡 Base Memory: Allocate a minimum of 2048 MB RAM (more for better performance).  
-   > 💡 Processors: 1 CPU (more for better performance)
-
-> :writing_hand: The default login is kali for the user and kali for the password!
-
-6. Update your kali, Open a terminal and run: ```sudo apt update && sudo apt upgrade```
-
-
-
-
-Part 3: Explore GitHub Codespaces
+### Part 3: Explore GitHub Codespaces
 
 GitHub Codespaces lets you run code in the cloud with just a browser — no need to install Python locally.
 
-Log into GitHub
-.
+1. Log into GitHub
+2. Create a new repository:
+3. Click the + in the top-right corner → New repository.
+4. Name it: lab-01.
+5. Choose Public (you can make it private later if you prefer).
+6. Check Add a README file.
+7. Click Create repository.
+8. On the repository page, click the green Code button → Open with Codespaces → New codespace.
+9. After a short wait, you’ll have a full coding environment running in your browser.(Will open a new tab)
 
-Create a new repository:
+___  
 
-Click the + in the top-right corner → New repository.
+### Part 4: Your First Python Program
 
-Name it: lab-01.
+In your Codespace, create a new file:  
+1. In the Explorer panel, click New File.
+2. Name it hello.py.
+3. Type the following code:  
+   > ```print("Hello, world!")```
 
-Choose Public (you can make it private later if you prefer).
+Run it by typing this command in the terminal at the bottom:  
+> ```python3 hello.py```
 
-Check Add a README file.
-
-Click Create repository.
-
-On the repository page, click the green Code button → Open with Codespaces → New codespace.
-
-After a short wait, you’ll have a full coding environment running in your browser.
-
-Part 4: Your First Python Program
-
-In your Codespace, create a new file:
-
-In the Explorer panel, click New File.
-
-Name it hello.py.
-
-Type the following code:
-
-print("Hello, world!")
-
-
-Run it by typing this command in the terminal at the bottom:
-
-python3 hello.py
-
-
-You should see:
-
-Hello, world!
+You should see:  
+> ```Hello, world!```
 
 Part 5: Using Input and Print
 
@@ -298,3 +246,13 @@ A GitHub repository named lab-01.
 At least two working Python files (hello.py and your own challenge).
 
 Submit your repository link via the LMS.
+
+
+> :warning: I won't be troubleshooting any issues on different setups, outside of the suggested lab environment. 
+VirtualBox: [https://www.virtualbox.org/wiki/Downloads](https://www.virtualbox.org/wiki/Downloads) (Download the package for your own OS)  
+> ⚠️ The downloaded image file is a 7zip compressed archive, so you'll first need to extract the VirtualBox image before importing to Virtualbox.  
+> :writing_hand: The default login is kali for the user and kali for the password!
+6. Update your kali, Open a terminal and run: ```sudo apt update && sudo apt upgrade```
+
+
+
