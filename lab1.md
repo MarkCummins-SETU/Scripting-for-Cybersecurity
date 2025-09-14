@@ -59,13 +59,13 @@ In your Codespace, create a new file:
 1. In the Explorer panel, click New File.
 2. Name it hello.py.
 3. Type the following code:  
-   > ```print("Hello, world!")```
+   ```print("Hello, world!")```
 
 Run it by typing this command in the terminal at the bottom:  
-> ```python3 hello.py```
+```python3 hello.py```
 
 You should see:  
-> ```Hello, world!```
+```Hello, world!```
 
 Part 5: Using Input and Print
 
