@@ -94,13 +94,16 @@ ___
    
 3. Write a program that asks a students for their name, age and student number and then print that information back out.
 
+___  
 
-### Deliverables
+###  Deliverables
 
 By the end of this lab, you should:
 
 Have a GitHub account and repository named lab-01.
 Be able to run Python code in Codespaces.
+
+___  
 
 ### Further Work 
 
