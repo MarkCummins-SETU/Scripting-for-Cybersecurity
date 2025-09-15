@@ -206,6 +206,16 @@ Use the regex `r"\d+\.\d+\.\d+\.\d+"` to find all IP addresses.
 
 Convert the list to a set, then print each unique IP.
 
+```
+# Convert to a set to remove duplicates
+unique_ips = set(ips)
+
+# Print each unique IP
+print("Unique IPs:")
+for ip in unique_ips:
+    print(ip)
+```
+
 **Expected output (order may vary):**
 
 ```
