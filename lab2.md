@@ -48,6 +48,9 @@ with open('sample.txt', 'r') as f:
         print(line)
 ```
 
+> ⚠️ Python doesn't use curly brackets to control logic blocks for for loops etc. instead it using indentation. So spaces and indentation matter in python. Look at the give code snippets carefully.
+
+
 > **Task 1.1**: Run the script and observe the output. Why are there blank lines between each word? (Hint: print adds a newline and the file line already has one.)
 
 **Expected output:**
@@ -70,7 +73,6 @@ with open('sample.txt', 'r') as f:
     for line in f:
         print(line.strip())
 ```
-> ⚠️ Python doesn't use curly brackets to control logic blocks for for loops etc. instead it using indentation. So spaces and indentation matter in python. Look at the give code snippets carefully.
 
 > **Task 1.2 Optional task:**:  Modify the code so that it prints line numbers, e.g. `1: Hello`.
 
