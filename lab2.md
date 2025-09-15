@@ -70,6 +70,7 @@ with open('sample.txt', 'r') as f:
     for line in f:
         print(line.strip())
 ```
+> ⚠️ Python doesn't use curly brackets to control logic blocks for for loops etc. instead it using indentation. So spaces and indentation matter in python. Look at the give code snippets carefully.
 
 > **Task 1.2 Optional task:**:  Modify the code so that it prints line numbers, e.g. `1: Hello`.
 
