@@ -102,6 +102,10 @@ ___
 
 1. Write a program that asks the user for their age, then prints:  
    > You are X years old.
+   > 
+2. Write a program that asks the user for two numbers, adds them, and prints the result.
+   
+3. Write a program that asks a students for their name, age and student number and then print that information back out.
 ___  
 
 ###  Deliverables
