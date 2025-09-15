@@ -4,7 +4,7 @@
 
 ### Week 2 : Beginning 15/09/2025
 - [Lab 1: Setting Up Your Lab Environment](https://github.com/MarkCummins-SETU/Scripting-for-Cybersecurity/blob/main/lab1.md)
-- [Lab 2: Introduction to Python]() (Coming soon!)
+- [Lab 2: Introduction to Python](https://github.com/MarkCummins-SETU/Scripting-for-Cybersecurity/blob/main/lab2.md)
 
 ### Week 3 : Beginning 22/09/2025  
 
