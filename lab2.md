@@ -10,7 +10,9 @@
 
 ## Background
 
-In Lab 1, we had a very brief intoduction to using Codespaces. Now we're going to jump straight into some python development, we'll be introducing lots of new ideas so don't panic. You should review all of the bits introduced in this lab several time over the next few weeks until you're comfortable with the concepts;. Remember we're introducing some of the skills needed to complete our first assignment in about 3 weeks.
+In Lab 1, we had a very brief intoduction to using Codespaces. Now we're going to jump straight into some python development, we'll be introducing lots of new ideas so don't panic. You should review all of the bits introduced in this lab several time over the next few weeks until you're comfortable with the concepts;. Remember we're introducing some of the skills needed to complete our first assignment in about 3 weeks. 
+
+> ⚠️ This is a huge step up, so take your time and make sure you understand each step and each snippet of code. Feel free to ask people for help, in the labs or on Discord etc.
 
 ## Scenario
 
