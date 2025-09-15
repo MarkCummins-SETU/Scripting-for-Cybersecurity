@@ -85,15 +85,23 @@ Run it again:
 
 ___  
 
-### Part 6: Practice Exercises
+### Part 6: Saving your work
+
+Once we've finished editing our files, we'll need to ensure we save them. So we'll need to use the git version control process. Which makes it a little more work.
+
+1. Choose the source control icon (Looks like three connected circles) on the left hand panel of your codespace VSCode.
+2. Under the green Commit label, hover over 'changes' then click the '+' icon to add all files for staging.
+3. Then in the comment box near the top add a comment, something like 'finished lab 01' or whatever suits.
+4. Click the correct comment icon just above the comments box.
+5. Finally click the 3 dots and select push from the dropwon list of options.
+6. If you go back and view your Repo on github you should now see your saved files added.
+
+___  
+
+### Part 7: Practice Exercises
 
 1. Write a program that asks the user for their age, then prints:  
    > You are X years old.
-
-2. Write a program that asks the user for two numbers, adds them, and prints the result.
-   
-3. Write a program that asks a students for their name, age and student number and then print that information back out.
-
 ___  
 
 ###  Deliverables
