@@ -14,7 +14,7 @@ In Lab 1, we had a very brief intoduction to using Codespaces. Now we're going t
 
 > ⚠️ This is a huge step up, so take your time and make sure you understand each step and each snippet of code. Feel free to ask people for help, in the labs or on Discord etc.
 
-> 💡 This lab counts as your challenge lab. Make sure to save all your files and it will count towards your extra credit. You don't need to fully solve the lab just make a good effort at it.
+> 💡 This lab counts as your challenge lab. Make sure to save all your files and it will count towards your extra credit. You don't need to fully solve the lab just make a good effort at it. You don't need to submit anything you will just need to show your github repo later in the term.
 
 ## Scenario
 
