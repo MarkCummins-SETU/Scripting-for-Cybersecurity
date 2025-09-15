@@ -14,6 +14,8 @@ In Lab 1, we had a very brief intoduction to using Codespaces. Now we're going t
 
 > ⚠️ This is a huge step up, so take your time and make sure you understand each step and each snippet of code. Feel free to ask people for help, in the labs or on Discord etc.
 
+> 💡 This lab counts as your challenge lab. Make sure to save all your files and it will count towards your extra credit. You don't need to fully solve the lab just make a good effort at it.
+
 ## Scenario
 
 Security logs contain valuable information such as IP addresses, usernames, and timestamps. Manually scanning these logs is inefficient. In this lab, you will **build your skills step by step** (working with files, practicing regex) before combining them to complete a real-world task.
