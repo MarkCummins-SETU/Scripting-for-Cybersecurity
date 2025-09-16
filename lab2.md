@@ -12,7 +12,7 @@
 
 In Lab 1, we had a very brief intoduction to using Codespaces. Now we're going to jump straight into some python development, we'll be introducing lots of new ideas so don't panic. You should review all of the bits introduced in this lab several time over the next few weeks until you're comfortable with the concepts;. Remember we're introducing some of the skills needed to complete our first assignment in about 3 weeks. 
 
-> ⚠️ This is a huge step up, so take your time and make sure you understand each step and each snippet of code. Feel free to ask people for help, in the labs or on Discord etc.
+> ⚠️ This is a huge step up, so take your time and make sure you understand each step and each snippet of code. Feel free to ask people for help, in the labs or on Discord etc. Don't stress if you don't understand everything just yet, we'll cover each element in detail in the lectures in the next few weeks.
 
 > 💡 This lab counts as your challenge lab. Make sure to save all your files and it will count towards your extra credit. You don't need to fully solve the lab just make a good effort at it. You don't need to submit anything you will just need to show your github repo later in the term.
 
@@ -202,6 +202,14 @@ Apr 10 12:38:00 ubuntu sshd[12349]: Connection closed by 127.0.0.1 port 22
 ### Step 2: Extract IP addresses
 
 Use the regex `r"\d+\.\d+\.\d+\.\d+"` to find all IP addresses. 
+
+
+create a `list ` (similar to an array in Java.)
+```
+ips = []     # creates an empty list called ips
+for ip in found_ips:
+        ips.append(ip) # Add each ip to our list
+```
 
 **Expected output (all IPs in a list):**
 
