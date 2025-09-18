@@ -1,3 +1,10 @@
+---
+title: "Scripting for Cybersecurity"
+author: [Mark Cummins]
+date: "2025-09-18"
+subject: "Lab 1: Setting Up Your Lab Environment"
+lang: "en"
+...
 # Lab 1: Setting Up Your Lab Environment
 
 ## Objectives
