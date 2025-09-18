@@ -12,9 +12,9 @@
 
 In Lab 1, we had a very brief intoduction to using Codespaces. Now we're going to jump straight into some python development, we'll be introducing lots of new ideas so don't panic. You should review all of the bits introduced in this lab several time over the next few weeks until you're comfortable with the concepts;. Remember we're introducing some of the skills needed to complete our first assignment in about 3 weeks. 
 
-> ⚠️ This is a huge step up, so take your time and make sure you understand each step and each snippet of code. Feel free to ask people for help, in the labs or on Discord etc. Don't stress if you don't understand everything just yet, we'll cover each element in detail in the lectures in the next few weeks.
+> This is a huge step up, so take your time and make sure you understand each step and each snippet of code. Feel free to ask people for help, in the labs or on Discord etc. Don't stress if you don't understand everything just yet, we'll cover each element in detail in the lectures in the next few weeks.
 
-> 💡 This lab counts as your challenge lab. Make sure to save all your files and it will count towards your extra credit. You don't need to fully solve the lab just make a good effort at it. You don't need to submit anything you will just need to show your github repo later in the term.
+> This lab counts as your challenge lab. Make sure to save all your files and it will count towards your extra credit. You don't need to fully solve the lab just make a good effort at it. You don't need to submit anything you will just need to show your github repo later in the term.
 
 ## Scenario
 
@@ -48,7 +48,7 @@ with open('sample.txt', 'r') as f:
         print(line)
 ```
 
-> ⚠️ Python doesn't use curly brackets to control logic blocks for loops etc. instead it uses indentation. So spaces and indentation matter in python. Look at the give code snippets carefully.
+> Python doesn't use curly brackets to control logic blocks for loops etc. instead it uses indentation. So spaces and indentation matter in python. Look at the give code snippets carefully.
 
 
 > **Task 1.1**: Run the script and observe the output. Why are there blank lines between each word? (Hint: print adds a newline and the file line already has one.)
