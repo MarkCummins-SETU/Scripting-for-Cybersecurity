@@ -40,7 +40,7 @@ ___
 8. Complete your user profile/billing information.. essentially your name as it appears on your student ID, and your address (no need to add credit cards etc.)
 9. Wait for approval (usually within 24–48 hours).
 
-> 💡 You can continue with the rest of this lab without waiting for approval.
+> You can continue with the rest of this lab without waiting for approval.
 
 ___  
 
@@ -58,7 +58,7 @@ GitHub Codespaces lets you run code in the cloud with just a browser — no need
 8. On the repository page, click the green Code button → Open with Codespaces → New codespace.
 9. After a short wait, you’ll have a full coding environment running in your browser.(Will open a new tab)
 
-> :writing_hand: You can use the README File each week to keep any notes you want for each lab.
+> You can use the README File each week to keep any notes you want for each lab.
 
 ___  
 
