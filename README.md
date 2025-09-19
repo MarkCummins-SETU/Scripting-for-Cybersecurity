@@ -3,8 +3,8 @@
 ## This repository will have all of the labs notes for each week of the course.  
 
 ### Week 2 : Beginning 15/09/2025
-- [Lab 1: Setting Up Your Lab Environment](https://github.com/MarkCummins-SETU/Scripting-for-Cybersecurity/blob/main/lab1.md)
-- [Lab 2: Introduction to Python](https://github.com/MarkCummins-SETU/Scripting-for-Cybersecurity/blob/main/lab2.md) -- [(Lab 2 Cheetsheet)](https://github.com/MarkCummins-SETU/Scripting-for-Cybersecurity/blob/main/lab2-cheetsheet.md)
+- [Lab 1: Setting Up Your Lab Environment](https://github.com/MarkCummins-SETU/Scripting-for-Cybersecurity/blob/main/Lab1/lab1.md)
+- [Lab 2: Introduction to Python](https://github.com/MarkCummins-SETU/Scripting-for-Cybersecurity/blob/main/Lab2/lab2.md) -- [(Lab 2 Cheetsheet)](https://github.com/MarkCummins-SETU/Scripting-for-Cybersecurity/blob/main/lab2-cheetsheet.md)
 
 ### Week 3 : Beginning 22/09/2025  
 
