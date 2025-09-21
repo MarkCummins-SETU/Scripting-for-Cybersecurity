@@ -1,6 +1,4 @@
 # lab2-2_starter.py
-import csv
-from collections import defaultdict
 
 LOGFILE = "sample_auth_small.log"  # change filename if needed
 
@@ -20,29 +18,6 @@ def simple_parser(line):
             return None
 
     return None
-
-
-def read_logs_and_collect_failed_ips(filename):
-    """
-    Reads filename and returns a dictionary mapping IP -> count of failed attempts.
-    """
-    counts = defaultdict(int)
-    with open(filename, "r") as f:
-        for line in f:
-            line = line.strip()
-            # look only for FAILED lines (simplified)
-            if "Failed password" in line or "Invalid user" in line:
-                ip = parse_line_for_ip(line)
-                if ip:
-                    counts[ip] += 1
-    return counts
-
-def write_counts_to_csv(counts, outname="failed_counts.csv"):
-    with open(outname, "w", newline="") as csvfile:
-        writer = csv.writer(csvfile)
-        writer.writerow(["ip", "failed_count"])
-        for ip, cnt in counts.items():
-            writer.writerow([ip, cnt])
 
 ## This is the main block that will run first. 
 ## It will call any functions from above that we might need.
