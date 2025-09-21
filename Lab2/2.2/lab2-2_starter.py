@@ -2,24 +2,25 @@
 import csv
 from collections import defaultdict
 
-LOGFILE = "sample_auth_small.log"  # change to your file
+LOGFILE = "sample_auth_small.log"  # change filename if needed
 
-def parse_line_for_ip(line):
+def simple_parser(line):
     """
-    Very simple parser: looks for the substring ' from <IP> ' and returns the IP.
-    Returns None if no IP found.
+    looks for the substring ' port ' and returns the following port number.
+    Returns None if no matching substring found.
     """
-    if " from " in line:
-        parts = line.split()
-        # simple approach: find 'from' token and take next token as IP
+    if " port " in line:
+        parts = line.split() # splits the line into tokens, seperates by spaces by default
         try:
-            idx = parts.index("from")
-            ip = parts[idx+1]
-            # strip any trailing punctuation
-            return ip.strip()
+            anchor = parts.index("port")    # Find the position of the token "port", our anchor
+            port = parts[anchor+1]          # the port value will be next token, anchor+1
+            return port.strip()             # strip any trailing punctuation
+
         except (ValueError, IndexError):
             return None
+
     return None
+
 
 def read_logs_and_collect_failed_ips(filename):
     """
@@ -43,9 +44,11 @@ def write_counts_to_csv(counts, outname="failed_counts.csv"):
         for ip, cnt in counts.items():
             writer.writerow([ip, cnt])
 
+## This is the main block that will run first. 
+## It will call any functions from above that we might need.
 if __name__ == "__main__":
-    counts = read_logs_and_collect_failed_ips(LOGFILE)
-    print("Raw counts:", dict(counts))
-    # write CSV
-    write_counts_to_csv(counts)
-    print("Wrote failed_counts.csv")
+
+    with open(LOGFILE, "r") as f:
+        for line in f:
+            print (simple_parser(line.strip()))
+    

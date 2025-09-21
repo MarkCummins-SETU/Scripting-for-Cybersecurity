@@ -11,41 +11,70 @@
 
 ## Setup
 
-* Review the steps from lab 2 if needed and use the same repo as last week called  `lab-02` then open a new codespace for this lab.  
-* You can use the provided `sample_auth_small.log` for testing your scripts.
-* Toy can use the starter script file: `lab2-2_starter.py`
+* Review the steps from [lab 2-1](../2.1/lab2-1.md) if needed and use the same repo as last week called  `lab-02` then open a new codespace for this lab.  
+* You can use the provided [sample_auth_small.log](sample_auth_small.log) for testing your scripts.
+* You Should use the starter script file: [lab2-2_starter.py](lab2-2_starter.py)
 
 ---
 
 ## Task 1 — Extract unique IPs (20 minutes)
 
-Run python `lab2-2_starter.py` to see starter behavior.
+Before we jump into any tasks, have a quick look at this weeks starter script `lab2-2_starter.py` tand see if you can figure out what exactly it does.  
 
-Modify or create a small script to:
+In the last lab we used regex to find all pattern's that match an IP address from the log files, but what if we packer data with source and destination IP adresses? What if we only wanted to extract the source IPs and not all IPs?  
 
-Read each line in `sample_auth_small.log`.
+A better technique (especially with sturctured data like log files) is to use **token-based extraction**. So we basically want to split each line into seperate words or `tokens`. Then we look for a fixed string that we can use as an anchor point and then take the next token. Lets try with an example.
 
-Extract IP addresses and build a set() of unique IPs.
+```bash
+Mar 10 13:45:01 host1 sshd[1001]: Failed password for invalid user admin from 203.0.113.45 port 52300 ssh2
+Mar 10 13:45:12 host1 sshd[1001]: Failed password for invalid user admin from 203.0.113.45 port 52301 ssh2
+```
 
-Print:
+In the snippet from our logfile, we can see that if we wanted to extracted the port numbers, we could find the anchor string 'port' and then read the next value to get the port number. Below is a brief function from our starter script that attempts to do just that. Try get the function to work, then use it as a basis for your own function "ip_parser(line)" that uses **token-based extraction** to read the IP addresses from the logs. 
 
-Total lines read.
+```python
+def simple_parser(line):
+    """
+    looks for the substring ' port ' and returns the following port number.
+    Returns None if no matching substring found.
+    """
+    if " port " in line:
+        parts = line.split(). # splits the line into tokens, seperates by spaces by default
+        try:
+            anchor = parts.index("port")    # Find the position of the token "port", our anchor
+            port = parts[anchor+1]          # the port value will be next token, anchor+1
+            return port.strip()             # strip any trailing punctuation
 
-Number of unique IPs.
+        except (ValueError, IndexError):
+            return None
 
-First 10 unique IPs (sorted).
+    return None
+```
 
-Hints
+> **Task 1.1**: Write you own ip_parser(line) function to extract all the IPs using **token-based extraction** for any line passed to it.  
 
-Use line.split() and search for the token from.
+> **Task 1.2**:  
+> * Read each line in `sample_auth_small.log`.  
+> * Extract IP addresses and build a set() of unique IPs.  
+> * Print:  
+> - Total lines read.  
+> - Number of unique IPs.  
+> - First 10 unique IPs (sorted).  
 
-Use set() to keep unique items.
+** Hints **
 
-Expected output example
+* Use line.split() and search for the token from.  
+* Use set() to keep unique items.  
+* can use the function sorted(s) to sort a set or list
 
+** Expected output example ** 
+
+```bash
 Lines read: 120
 Unique IPs: 18
 First 10 IPs: ['192.0.2.13', '198.51.100.22', '203.0.113.45', ...]
+```
+
 
 Task 2 — Count failed login attempts per IP (30 minutes)
 
