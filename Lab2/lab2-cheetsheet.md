@@ -1,6 +1,6 @@
-# Lab 2 — File Handling & Regex in Python (Cheat Sheet)
+# Lab 2-1 — File Handling & Regex in Python (Cheat Sheet)
 
-This cheat sheet summarizes the key commands, functions, and regex patterns introduced in **Lab 2**.
+This cheat sheet summarizes the key commands, functions, and regex patterns introduced in **Lab 2-1**.
 
 ---
 

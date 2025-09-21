@@ -1,5 +1,3 @@
-
-
 # Example 1 / Task 1.1
 print ("\n Example 1 / Task 1.1")
 with open('sample.txt', 'r') as f:
