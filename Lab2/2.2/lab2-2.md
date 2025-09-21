@@ -13,24 +13,24 @@
 
 * Review the steps from [lab 2-1](../2.1/lab2-1.md) if needed and use the same repo as last week called  `lab-02` then open a new codespace for this lab.  
 * You can use the provided [sample_auth_small.log](sample_auth_small.log) for testing your scripts.
-* You Should use the starter script file: [lab2-2_starter.py](lab2-2_starter.py)
+* You should use the starter script file: [lab2-2_starter.py](lab2-2_starter.py)
 
 ---
 
-## Task 1 — Extract unique IPs (20 minutes)
+## Task 1 — Extract unique IPs (25 minutes)
 
-Before we jump into any tasks, have a quick look at this weeks starter script `lab2-2_starter.py` tand see if you can figure out what exactly it does.  
+Before we jump into any tasks, have a quick look at this weeks starter script [lab2-2_starter.py](lab2-2_starter.py) and see if you can figure out what exactly it does.  
 
-In the last lab we used regex to find all pattern's that match an IP address from the log files, but what if we packer data with source and destination IP adresses? What if we only wanted to extract the source IPs and not all IPs?  
+In the last lab we used regex to find all pattern's that match an IP address from the log files, but what if we had packet capture data with source and destination IP adresses? What if we only wanted to extract the source IPs and not all IPs?  
 
 A better technique (especially with sturctured data like log files) is to use **token-based extraction**. So we basically want to split each line into seperate words or `tokens`. Then we look for a fixed string that we can use as an anchor point and then take the next token. Lets try with an example.
 
-```bash
+```
 Mar 10 13:45:01 host1 sshd[1001]: Failed password for invalid user admin from 203.0.113.45 port 52300 ssh2
 Mar 10 13:45:12 host1 sshd[1001]: Failed password for invalid user admin from 203.0.113.45 port 52301 ssh2
 ```
 
-In the snippet from our logfile, we can see that if we wanted to extracted the port numbers, we could find the anchor string 'port' and then read the next value to get the port number. Below is a brief function from our starter script that attempts to do just that. Try get the function to work, then use it as a basis for your own function "ip_parser(line)" that uses **token-based extraction** to read the IP addresses from the logs. 
+In the snippet from our logfile, we can see that if we wanted to extracted the port numbers, we could find the anchor string 'port' and then read the next value to get the port number. Below is a brief function from our starter script that attempts to do just that. Try get the function to work, then use it as a basis for your own function "ip_parse(line)" that uses **token-based extraction** to read the IP addresses from the logs. 
 
 ```python
 def simple_parser(line):
@@ -51,21 +51,21 @@ def simple_parser(line):
     return None
 ```
 
-> **Task 1.1**: Write you own ip_parser(line) function to extract all the IPs using **token-based extraction** for any line passed to it.  
+> **Task 1.1**: Write you own ip_parse(line) function to extract all the IPs using **token-based extraction** for any line passed to it.  
 
 > **Task 1.2**:  
-> * Read each line in `sample_auth_small.log`.  
-> * Extract IP addresses and build a set() of unique IPs.  
-> * Print:  
-> - Total lines read.  
-> - Number of unique IPs.  
-> - First 10 unique IPs (sorted).  
+> 1. Read each line in `sample_auth_small.log`.  
+> 2. Extract IP addresses and build a set() of unique IPs.  
+> 3.  Print:  
+> * Total lines read.  
+> * Number of unique IPs.  
+> * First 10 unique IPs (sorted).  
 
 ** Hints **
 
 * Use line.split() and search for the token from.  
 * Use set() to keep unique items.  
-* can use the function sorted(s) to sort a set or list
+* Use the function sorted(s) to sort a set or list
 
 ** Expected output example ** 
 
@@ -75,99 +75,74 @@ Unique IPs: 18
 First 10 IPs: ['192.0.2.13', '198.51.100.22', '203.0.113.45', ...]
 ```
 
+## Task 2 — Count failed login attempts per IP (30 minutes)
 
-Task 2 — Count failed login attempts per IP (30 minutes)
+* Using defaultdict(int) (or normal dict) count how many failed attempts each IP has.  
+* Only count lines containing Failed password or Invalid user.  
+* Print the counts for all IPs.  
 
-Using defaultdict(int) (or normal dict) count how many failed attempts each IP has.
+** Starter snippet **
 
-Only count lines containing Failed password or Invalid user.
-
-Print the counts for all IPs.
-
-Starter snippet
-
+```python
 from collections import defaultdict
 
-counts = defaultdict(int)
+counts = defaultdict(int)           # Create a dictionary to keep track of IPs
+
 with open("sample_auth_small.log") as f:
     for line in f:
         if "Failed password" in line or "Invalid user" in line:
             # extract ip
-            ip = parse_line_for_ip(line)
+            ip = ip_parse(line)
             if ip:
                 counts[ip] += 1
 print(counts)
+```
 
-
-Expected output sample
+** Expected output sample **
 
 defaultdict(<class 'int'>, {'203.0.113.45': 12, '203.0.113.46': 8, '198.51.100.99': 5})
 
-Instructor demo (15 minutes)
 
-Instructor shows:
 
-How to sort dictionary items by value: sorted(counts.items(), key=lambda kv: kv[1], reverse=True)
+## Task 3 — Top 5 attacker IPs and export (35 minutes)
 
-How to print top N (e.g., top 5).
+* Produce a list of top 5 IPs by failed attempts and print them nicely:  
+* Format: Rank. IP — Count. 
+* Write the full counts dictionary to failed_counts.txt with headers ip,failed_count.  
+* Run your script on the larger mixed_logs_5000.log and time how long it takes. Print the elapsed time.  
 
-Quick explanation of CSV writing.
+> You can use the follow snippet to help you sort your dictionary and return n elements.  
+> Dictionaries can't be sorted easily hence the strange looking code. We'll cover what exactly it's doing in the next lecture.
 
-Task 3 — Top 5 attacker IPs and CSV export (25 minutes)
+```python
+def top_n(counts, n=5):
+    return sorted(counts.items(), key=lambda kv: kv[1], reverse=True)[:n]
+```
 
-Produce a list of top 5 IPs by failed attempts and print them nicely:
+** Timing hint ** 
 
-Format: Rank. IP — Count
-
-Write the full counts dictionary to failed_counts.csv with headers ip,failed_count.
-
-Run your script on the larger mixed_logs_5000.log and time how long it takes. Print the elapsed time.
-
-Timing hint
-
+```python
 import time
 start = time.time()
 # run counting
 end = time.time()
 print("Elapsed:", end-start, "seconds")
+```
 
+** Expected console output **
 
-Expected console output
-
+```
 Top 5 attacker IPs:
 1. 203.0.113.45 — 45
 2. 203.0.113.46 — 32
 3. 198.51.100.99 — 20
 ...
-Wrote failed_counts.csv
+
+Wrote failed_counts.txt
 Elapsed: 0.12 seconds
+```
 
-Deliverables (at end of lab)
 
-labA_solution.py (your final script).
+## Safety & Ethics
 
-failed_counts.csv (generated).
-
-Short README (1 paragraph) describing how to run the script.
-
-Simple assessment checklist (for TA/instructor)
-
-Script runs without error on sample_auth_small.log. (Pass)
-
-Counts look sensible and CSV file is present. (Pass)
-
-Top 5 printed and sorted. (Merit)
-
-Timed and ran on mixed_logs_5000.log and note added. (Distinction)
-
-Extensions (if time)
-
-Improve parse_line_for_ip to support parentheses, commas, or trailing punctuation.
-
-Filter out known "good" IPs (e.g., Googlebot) before counting.
-
-Add command-line args to specify input file and top-N.
-
-Safety & Ethics
-
-Remind students these logs are synthetic. Always respect privacy and law when handling real logs.
+** Log files can contain a huge amount of valuable company data, so never share real logs in public repos. The logs for this lab are synthetic, and created just for our lab. Always respect privacy and company data when handling real logs. **
