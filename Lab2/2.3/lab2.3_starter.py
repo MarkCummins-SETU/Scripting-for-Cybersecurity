@@ -41,7 +41,7 @@ if __name__ == "__main__":
     with open(LOGFILE) as f:
         for line in f:
             ts, ip, event = parse_auth_line(line)
-            if ts and ip and event == "failed":
+            if ts and ip and event == "failed":   # checks that ts and ip are not null, and that event=="failed"
                 per_ip_timestamps[ip].append(ts)
     # quick print
     for ip, times in per_ip_timestamps.items():
