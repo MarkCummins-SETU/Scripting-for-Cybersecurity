@@ -8,4 +8,8 @@
 
 ### Week 3 : Beginning 22/09/2025  
 - [Lab 2-2: Data Structures & Counting](https://github.com/MarkCummins-SETU/Scripting-for-Cybersecurity/blob/main/Lab2/2.2/lab2-2.md)
+- Finish Lab 2-2, only move onto 2-3 if you've everything fully completed.
+
+### Week 4 : Beginning 29/09/2025 
 - [Lab 2-3: Attack Pattern Detection & Reporting](https://github.com/MarkCummins-SETU/Scripting-for-Cybersecurity/blob/main/Lab2/2.3/lab2-3.md)
+- Start CA Assignment 1
