@@ -13,3 +13,6 @@
 ### Week 4 : Beginning 29/09/2025 
 - [Lab 2-3: Attack Pattern Detection & Reporting](https://github.com/MarkCummins-SETU/Scripting-for-Cybersecurity/blob/main/Lab2/2.3/lab2-3.md)
 - Start CA Assignment 1
+
+### Week 5 : Beginning 06/10/2025 
+- Work on CA Assignment 1
