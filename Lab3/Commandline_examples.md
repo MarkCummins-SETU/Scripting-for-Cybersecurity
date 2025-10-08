@@ -28,3 +28,31 @@ alias ports='ss -tuln'
 
 alias top10='du -h * | sort -hr | head'
 ```
+# Common command line tools
+
+# Some Example functions
+```bash
+up() { ping -c1 "$1" &>/dev/null && echo "$1 is up" || echo "$1 is down"; }
+```
+
+```bash
+check_ips() {
+    for ip in $(grep -Eo '([0-9]{1,3}\.){3}[0-9]{1,3}' "$1"); do
+        ping -c1 -W1 "$ip" &>/dev/null && echo "$ip alive"
+    done
+}
+```
+
+## bash scripts
+Example: Network scanner
+```bash
+#!/bin/bash
+subnet="192.168.1"
+for i in {1..254}; do
+  ip="$subnet.$i"
+  (ping -c1 -W1 $ip &>/dev/null && echo "[+] $ip alive") &
+done
+wait
+```
+
+# wget and curl
