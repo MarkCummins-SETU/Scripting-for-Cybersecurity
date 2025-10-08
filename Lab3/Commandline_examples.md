@@ -55,4 +55,17 @@ done
 wait
 ```
 
+## Python: Interactive mode:
+
+```bash
+python3 -q
+>>> import socket
+>>> socket.gethostbyname(‘setu.ie’)
+
+# One-liner mode:
+
+python3 -c 'import hashlib;print(hashlib.md5(b"admin").hexdigest())'
+```
+
+
 # wget and curl
