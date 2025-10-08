@@ -19,7 +19,7 @@
 
 ### Week 6 : Beginning 13/10/2025
 - Assignment 1 demos.
-- [Lab 3.1: Capturing Packets with Scapy](https://github.com/MarkCummins-SETU/Scripting-for-Cybersecurity/blob/main/Lab3/3.1/lab3-1.md)
+- [Lab 3.1]()
 - [Lab 3.2]()
 
 ### Week 7 : Beginnering 20/10/2025
