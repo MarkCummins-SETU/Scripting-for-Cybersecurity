@@ -1,13 +1,5 @@
 # Command Line Power Lab
 
-*Cybersecurity — Year 2*
-
-**Duration:** 2 hours  
-**Prerequisites:** Basic Linux shell familiarity (`cd`, `ls`, `pwd`)  
-**Author:** [Your Name]
-
----
-
 ## Table of Contents
 
 - [Overview](#overview)
@@ -26,7 +18,7 @@
 ---
 
 ## Overview
-This lab guides you through essential command-line skills used extensively in cybersecurity: piping and redirection, text processing, automation with Bash, using `curl`/`wget` for web interaction, parallel host discovery, hashing, and combining small tools to build workflows. The exercises are practical and lightweight so they can be completed in a 2-hour lab session.
+This lab guides you through essential command-line skills used extensively in cybersecurity: piping and redirection, text processing, automation with Bash, using `curl`/`wget` for web interaction, parallel host discovery, hashing, and combining small tools to build workflows. 
 
 ## Learning Outcomes
 By the end of this lab you should be able to:
@@ -42,7 +34,7 @@ By the end of this lab you should be able to:
 
 ## Setup & Getting Started
 
-1. Confirm you have a Bash shell. On Windows, use WSL, Git Bash, or similar.
+1. Confirm you have a Bash shell. The terminal on our Codespaces should be perfect.
 2. Verify the following utilities are available:
    - `bash`, `grep`, `awk`, `cut`, `sort`, `uniq`, `xargs`  
    - `curl`, `wget`, `ping`, `ss` or `netstat`  
@@ -54,11 +46,11 @@ Run this quick check in your terminal:
 echo "Hello, $(whoami)! Your lab starts now." && python3 --version && curl --version >/dev/null && wget --version >/dev/null
 ```
 
-If any command fails, install the missing package using your distro's package manager (e.g. `apt`, `dnf`, `pacman`, `brew`).
+If any command fails, install the missing package using your distro's package manager (e.g. `apt`, `dnf`, `pacman`, `brew`). If you're using our usual Codespaces then everything should be working fine.
 
 ---
 
-## 1. Basic Command-Line Power (≈15 min)
+## 1. Basic Command-Line Power 
 
 ### Concept
 Commands can be piped together; small tools do one thing well. Aliases shorten frequent commands.
@@ -75,7 +67,7 @@ alias ll='ls -la'
 alias ports='ss -tuln'
 ```
 
-### Exercise 1 (5 min)
+### Exercise 1 
 
 Create an alias called `myip` that prints IPv4 addresses from `ip a`. Make it persistent by adding it to `~/.bashrc`.
 
@@ -87,7 +79,7 @@ source ~/.bashrc
 
 ---
 
-## 2. Bash Scripting Basics (≈20 min)
+## 2. Bash Scripting Basics 
 
 ### Concept
 A Bash script is a text file with a shebang (`#!/bin/bash`) and executable permissions.
@@ -110,7 +102,7 @@ chmod +x sysinfo.sh
 ./sysinfo.sh
 ```
 
-### Exercise 2 (10 min)
+### Exercise 2 
 
 Write `whoami.sh` that prints:
 
@@ -124,7 +116,7 @@ Date: <today’s date>
 
 ---
 
-## 3. Bash Functions & Simple Utilities (≈20 min)
+## 3. Bash Functions & Simple Utilities 
 
 ### Concept
 Functions let you define commands inside your shell or `.bashrc` without creating separate files.
@@ -133,7 +125,7 @@ Functions let you define commands inside your shell or `.bashrc` without creatin
 
 ```bash
 ping_sweep() {
-  subnet="192.168.1"
+  subnet="172.17.0"
   for i in {1..10}; do
     ip="$subnet.$i"
     (ping -c1 -W1 $ip &>/dev/null && echo "[+] $ip alive") &
@@ -164,7 +156,7 @@ up() { ping -c1 "$1" &>/dev/null && echo "$1 is up" || echo "$1 is down"; }
 Try:
 ```bash
 up 8.8.8.8
-up 10.255.255.1
+up 172.17.0.1
 ```
 
 #### Example 3 — `rot13()` fun
@@ -179,14 +171,14 @@ rot13 "Hello World"
 rot13 "Uryyb Jbeyq"
 ```
 
-#### Exercise 3b (5 min)
+#### Exercise 3b 
 Create `check_ips()` that reads a filename and prints only the live IPs found in the file. Save output to `alive_hosts.txt`.
 
 Hint: use `grep -Eo` to extract IPv4 addresses and `ping -c1 -W1` to test them.
 
 ---
 
-## 4. Processing Text and Data (≈25 min)
+## 4. Processing Text and Data 
 
 ### Concept
 Small text utilities let you filter, extract fields, and build commands dynamically.
@@ -219,7 +211,7 @@ echo "8.8.8.8 1.1.1.1" | xargs -n1 ping -c1
 cat urls.txt | xargs -n1 curl -I
 ```
 
-### Exercise 4 (10 min)
+### Exercise 4 
 
 Given `/etc/passwd`, list usernames that begin with `s` and output them sorted and unique.
 
@@ -230,7 +222,7 @@ grep '^s' /etc/passwd | cut -d: -f1 | sort | uniq
 
 ---
 
-## 5. Fetching Data with `curl` & `wget` (≈20 min)
+## 5. Fetching Data with `curl` & `wget` 
 
 ### `curl` — quick web requests and APIs
 
@@ -270,14 +262,14 @@ wget -r -np -k https://example.com/
 wget -i urls.txt
 ```
 
-### Exercises (10 min)
+### Exercises 
 1. Use `curl` to fetch your public IP: `curl -s https://api.ipify.org?format=json`
 2. Use `curl -I` to get headers from three different sites.
 3. Create `downloads/` and use `wget -P downloads/ <url>` to save a file.
 
 ---
 
-## 6. Hashing and Verification (≈15 min)
+## 6. Hashing and Verification 
 
 ### Concept
 Hashes (digests) are used for integrity checks and quick identity of data.
@@ -350,7 +342,7 @@ echo -n "secret" | hashit sha256
 hashit blake2b /path/to/file.bin
 ```
 
-### Exercise 6 (5 min)
+### Exercise 6 
 
 Use `hashit` to compute the `sha256` of `/etc/hosts` and compare the output with `sha256sum /etc/hosts`.
 
@@ -382,15 +374,9 @@ while IFS= read -r url; do
 done < "$infile"
 ```
 
-Extension ideas:
-
-- Save results to `results.log` with timestamps.  
-- Colorize output for OK/FAIL.  
-- Check redirect targets using `curl -I` and extract the `Location` header.
-
 ---
 
-## 8. Reflection & Further Reading (≈5 min)
+## 8. Reflection & Further Reading 
 
 **Questions to consider:**
 
@@ -432,11 +418,4 @@ python3 -c "import hashlib; print(hashlib.sha256(b'admin').hexdigest())"
 ```
 
 ---
-
-### License
-Feel free to reuse and adapt these lab notes for teaching. Attribution appreciated.
-
----
-
-*End of lab handout.*
 
