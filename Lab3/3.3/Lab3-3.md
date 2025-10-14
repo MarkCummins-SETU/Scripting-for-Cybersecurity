@@ -20,7 +20,7 @@ Create a new private Repo and store all of your solutions as you progress throug
 Try solve as much of each challenge on the command line. So rather than just clicking links and downloading files, use wget from the CLI. Rather than use online tools again try use python and the commandline for as much as possible. 
 
 
-> Netcat isn't installed by default on codespaces...
-> To install:
-> sudo apt-get update
-> sudo apt-get install netcat-traditional
+> Netcat isn't installed by default on codespaces...  
+> To install:  
+> sudo apt-get update  
+> sudo apt-get install netcat-traditional  
