@@ -123,10 +123,10 @@ Functions let you define commands inside your shell or `.bashrc` without creatin
 
 ### Example 1 — `ping_sweep()`
 
-> Ping isnt installed by default on codespaces...
-> To install:
-> sudo apt-get update
-> sudo apt-get install -y iputils-ping
+> Ping isnt installed by default on codespaces...  
+> To install:  
+> sudo apt-get update  
+> sudo apt-get install -y iputils-ping  
 
 
 ```bash
