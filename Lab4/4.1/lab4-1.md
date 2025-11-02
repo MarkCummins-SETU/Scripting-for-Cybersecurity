@@ -1,4 +1,4 @@
-# Lab 4 — HTTP Basics: Requests, HTML Parsing & Response Analysis 
+# Lab 4.1 — HTTP Basics: Requests, HTML Parsing & Response Analysis 
 
 In this lab we'll learn foundational web reconnaissance skills in Python — making HTTP requests, parsing HTML, extracting metadata, and analyzing response headers.  
 
