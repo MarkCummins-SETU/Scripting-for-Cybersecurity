@@ -48,24 +48,15 @@ By the end of this lab you should be able to:
 
 Follow these steps, and run each listed command, record the results, and answer the short questions after each step in a text file called **phase1_notes.txt**  
 
-The curl -i command is used to include the HTTP response headers in the output when making an HTTP request.
+The curl -i command is used to include the HTTP response headers in the output when making an HTTP request.  
+Normally, when you run: ```curl https://example.com```  
 
-🔍 Breakdown
+You only get the response body — the content returned by the server (like HTML, JSON, etc.).  
+But when you add the -i (or --include) flag: ```curl -i https://example.com```  
 
-Normally, when you run:
+You get both the headers and the body, for example:
 
-curl https://example.com
-
-
-You only get the response body — the content returned by the server (like HTML, JSON, etc.).
-
-But when you add the -i (or --include) flag:
-
-curl -i https://example.com
-
-
-you get both the headers and the body, for example:
-
+```bash
 HTTP/1.1 200 OK
 Date: Sat, 02 Nov 2025 16:25:00 GMT
 Content-Type: text/html; charset=UTF-8
@@ -78,70 +69,41 @@ Server: Apache
 <head>...</head>
 <body>...</body>
 </html>
+```
 
-🧩 Explanation
-Part	Description
-HTTP/1.1 200 OK	The status line (protocol, status code, and message).
-The lines that follow (e.g. Date:, Content-Type:)	The HTTP headers — metadata about the response.
-The blank line	Marks the end of headers.
-The rest (HTML/JSON/etc.)	The response body.
-🧠 Common Uses
-
-Debugging HTTP responses
-To inspect what headers the server sends (cookies, content type, caching info, etc.)
-
-Checking redirect behavior (use with -L to follow redirects)
-
-API testing, to see full metadata from REST endpoints.
+**Common Uses**
+Debugging HTTP responses  
+To inspect what headers the server sends (cookies, content type, caching info, etc.)  
 
 ⚙️ Related Options
-Option	Purpose
--I or --head	Fetch only the headers (no body).
--v or --verbose	Show full request and response (headers, connection info, etc.).
--s	Silent mode (no progress meter). Often combined as -sI for script use.
-✅ Example
-curl -i https://api.github.com
+```bash
+-I or --head	                     Fetch only the headers (no body).      
+-v or --verbose	                  Show full request and response (headers, connection info, etc.).      
+-s	Silent mode (no progress meter). Often combined as -sI for script use.      
+```
+
+### Step 1 — Quick HTTP header check with curl 
+
+On the terminal in your codespace try run:
+```bash
+curl -I http://scanme.nmap.org
+```
+
+**What to look for: **  
+
+The first line shows the HTTP status (e.g. HTTP/1.1 200 OK or HTTP/1.1 301 Moved Permanently). That tells you whether the request succeeded or was redirected.  
+Server: often reveals the web server software (e.g. nginx/1.18.0, Apache/2.4.41). This is a quick fingerprint.  
+Content-Type: tells you what kind of payload to expect (HTML, JSON, etc.).  
+Location: appears on redirects and shows the new URL the client should follow.  
+
+**Questions to answer in phase1_notes.txt:** 
+
+1. What status line did you get and what does it mean?  
+
+2. What is the Server header value? Is it specific (nginx/1.22) or generic?
 
 
-Output (trimmed):
-
-HTTP/2 200
-server: github.com
-content-type: application/json; charset=utf-8
-...
-
-{
-  "current_user_url": "https://api.github.com/user",
-  ...
-}
-
-
-Step 1 — Quick HTTP header check with curl 
-
-Run:
-
-curl -I http://localhost:8001
-
-
-Save the exact output to phase1_curl_headers.txt.
-
-What to look for / talk-through:
-
-The first line shows the HTTP status (e.g. HTTP/1.1 200 OK or HTTP/1.1 301 Moved Permanently). That tells you whether the request succeeded or was redirected.
-
-Server: often reveals the web server software (e.g. nginx/1.18.0, Apache/2.4.41). This is a quick fingerprint.
-
-Content-Type: tells you what kind of payload to expect (HTML, JSON, etc.).
-
-Location: appears on redirects and shows the new URL the client should follow.
-
-Questions to answer in phase1_notes.txt:
-
-What status line did you get and what does it mean?
-
-What is the Server header value? Is it specific (nginx/1.22) or generic?
-
-Step 2 — Fetch the full page body (5 min)
+### Step 2 — Fetch the full page body (5 min)
 
 Run:
 
