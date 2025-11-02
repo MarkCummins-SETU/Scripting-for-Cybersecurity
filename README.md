@@ -19,11 +19,11 @@
 
 ### Week 6 : Beginning 13/10/2025
 - Assignment 1 demos.
-- [Lab 3.1](https://github.com/MarkCummins-SETU/Scripting-for-Cybersecurity/blob/main/Lab3/3.1/lab3-1.md)
-- [Lab 3.2](https://github.com/MarkCummins-SETU/Scripting-for-Cybersecurity/blob/main/Lab3/3.2/lab3-2.md)
+- [Lab 3.1](https://github.com/MarkCummins-SETU/Scripting-for-Cybersecurity/blob/main/Lab3/3.1/Lab3-1.md)
+- [Lab 3.2](https://github.com/MarkCummins-SETU/Scripting-for-Cybersecurity/blob/main/Lab3/3.2/Lab3-2.md)
 
 ### Week 7 : Beginnering 20/10/2025
-- [Lab 3.3](https://github.com/MarkCummins-SETU/Scripting-for-Cybersecurity/blob/main/Lab3/3.3/lab3-3.md)
+- [Lab 3.3](https://github.com/MarkCummins-SETU/Scripting-for-Cybersecurity/blob/main/Lab3/3.3/Lab3-3.md)
 - Complete PicoCTF challenges
 
 ### Week 8 : Webinning 27/10/2025 
