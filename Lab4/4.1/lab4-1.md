@@ -2,7 +2,6 @@
 
 In this lab we'll learn foundational web reconnaissance skills in Python — making HTTP requests, parsing HTML, extracting metadata, and analyzing response headers.  
 
----
 
 ## Safety & Ethics
 This lab and the following few labs covers fingerprinting and reconnaissance techniques that can be misused, and may be illegal if use incorrectly. 
@@ -10,7 +9,6 @@ This lab and the following few labs covers fingerprinting and reconnaissance tec
 Students must only run scans against local VMs or sites listed in the lab, or explicitly authorised targets where written permission exists.  
 Unauthorized scanning or probing of third-party systems or networks is **illegal, so be careful**. You have been warned!!.  
 
----
 
 ## Learning objectives
 
@@ -22,7 +20,6 @@ By the end of this lab you should be able to:
 - Write modular Python scripts with error handling and structured JSON outputs.
 - Reflect on how reconnaissance data can be used responsibly.
 
----
 
 ## Initial Lab setup
 
@@ -42,7 +39,6 @@ By the end of this lab you should be able to:
 
 > Check out the meaning of the returned [status code](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes). 
 
----
 
 ## Phase 1 — Warm-up: Guided Step-by-Step Exercises 
 
@@ -91,10 +87,10 @@ curl -I http://scanme.nmap.org
 
 **What to look for: **  
 
-The first line shows the HTTP status (e.g. HTTP/1.1 200 OK or HTTP/1.1 301 Moved Permanently). That tells you whether the request succeeded or was redirected.  
-Server: often reveals the web server software (e.g. nginx/1.18.0, Apache/2.4.41). This is a quick fingerprint.  
-Content-Type: tells you what kind of payload to expect (HTML, JSON, etc.).  
-Location: appears on redirects and shows the new URL the client should follow.  
+- The first line shows the HTTP status (e.g. HTTP/1.1 200 OK or HTTP/1.1 301 Moved Permanently). That tells you whether the request succeeded or was redirected.  
+- Server: often reveals the web server software (e.g. nginx/1.18.0, Apache/2.4.41). This is a quick fingerprint.  
+- Content-Type: tells you what kind of payload to expect (HTML, JSON, etc.).  
+- Location: appears on redirects and shows the new URL the client should follow.  
 
 **Questions to answer in phase1_notes.txt:** 
 
@@ -103,82 +99,70 @@ Location: appears on redirects and shows the new URL the client should follow.
 2. What is the Server header value? Is it specific (nginx/1.22) or generic?
 
 
-### Step 2 — Fetch the full page body (5 min)
+### Step 2 — Fetch the full page body
 
-Run:
+On the terminal in your codespace try run:
+```bash
+curl http://scanme.nmap.org-o scanme.html
+head -n 40 scanme.html
+```
 
-curl http://localhost:8001 -o phase1_page.html
-head -n 40 phase1_page.html
+> Inspect the saved file and copy the first 10 non-empty lines into your phase1_page_head.txt.
 
+**Questions to answer in phase1_notes.txt:** 
 
-Inspect the saved file and copy the first 10 non-empty lines into phase1_page_head.txt.
+1. What is the <title> of the page (if present)?
 
-What to look for / talk-through:
+2. Do you see any <form> elements? What are their action attributes (copy them)?
 
-The body contains the HTML — look for <title>, visible headings (<h1>, <h2>), and any obvious forms (<form ...>).
+### Step 3 — Compare curl and requests 
 
-If the page is empty or a JSON blob, the Content-Type you saw earlier should explain that.
-
-If curl returned a redirect previously, the saved page may be the redirected destination.
-
-Questions to answer:
-
-What is the <title> of the page (if present)?
-
-Do you see any <form> elements? What are their action attributes (copy them)?
-
-Step 3 — Compare curl and requests (10 min)
-
-Run this quick Python snippet and save output to phase1_requests_output.txt:
-
-# run in an activated venv with requests installed
+> Run this quick Python snippet and save output to phase1_requests_output.txt:
+```python3
 import requests
-r = requests.get("http://localhost:8001", timeout=5)
+r = requests.get("http://scanme.nmap.org", timeout=5)
 print("Status:", r.status_code)
 print("Final URL:", r.url)
 print("Server header:", r.headers.get("Server"))
 print("Content-Type:", r.headers.get("Content-Type"))
 print("First 200 chars of body:\\n", r.text[:200].replace('\n','\\n'))
+```
+
+> Paste the printed output into phase1_requests_output.txt.
+
+**What to look for:**
+
+- Compare the Status and Final URL with the curl results. requests follows redirects by default; curl -I does not unless you use -L.   
+- The Server header in Python should match the curl output; mismatches indicate different server behavior depending on client.  
+- The start of the body helps confirm the page content and encoding.  
 
 
-Paste the printed output into phase1_requests_output.txt.
+**Questions to answer in phase1_notes.txt:** 
 
-What to look for / talk-through:
+1. Did requests and curl report the same status and server header?
 
-Compare the Status and Final URL with the curl results. requests follows redirects by default; curl -I does not unless you use -L.
+2. If different, what header or other factor might explain it (redirects, default headers, user agent)?
 
-The Server header in Python should match the curl output; mismatches indicate different server behavior depending on client.
+### Step 4 — Inspect headers with a different User-Agent 
 
-The start of the body helps confirm the page content and encoding.
+> Run this quick Python snippet and save output to phase1_requests_output.txt:
+```bash
+curl -i  -A "MyTestAgent/1.0" https://httpbin.org/headers
+curl -i  https://httpbin.org/headers
+```
 
-Questions to answer:
+**What to look for:**
 
-Did requests and curl report the same status and server header?
+- Some servers change behavior based on the User-Agent. They may block, redirect, or return different content-lengths.  
+- Web application firewalls or simple server rules sometimes detect known scanning agents and respond differently.  
 
-If different, what header or other factor might explain it (redirects, default headers, user agent)?
+**Questions to answer in phase1_notes.txt:** 
 
-Step 4 — Inspect headers with a different User-Agent (5 min)
+1. Did the response change (status, server header, content-length) when the User-Agent was MyTestAgent/1.0?
 
-Run:
+2. If it had changed, what could that mean about the server’s defenses?
 
-curl -I -A "sqlmap/1.5" http://localhost:8001
-
-
-Save output to phase1_ua_sqlmap.txt.
-
-What to look for / talk-through:
-
-Some servers change behavior based on the User-Agent. They may block, redirect, or return different content-lengths.
-
-Web application firewalls or simple server rules sometimes detect known scanning agents and respond differently.
-
-Questions to answer:
-
-Did the response change (status, server header, content-length) when the User-Agent was sqlmap/1.5?
-
-If it changed, what could that mean about the server’s defenses?
-
-Step 5 — Short synthesis (5 min)
+### Step 5 — Short synthesis
 
 Open phase1_notes.txt and append a 4–6 line summary answering:
 
