@@ -42,7 +42,7 @@ Run this quick Python snippet to understand TCP connect behavior and timeouts.
 # quick_socket_demo.py
 import socket, sys, time
 
-host = "127.0.0.1"
+host = "scanme.nmap.org"
 port = 22  # try different ports
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -60,23 +60,24 @@ finally:
     print(f"Elapsed: {time.time()-start:.2f}s")
 ```
 
+> Run the quick_socket_demo.py and try connect to lots of different common ports (80,443,21,8080 etc)
+
 **What you should observe / talk-through:**
 
 - `connect()` returns quickly for open ports; for closed ports it may raise `ConnectionRefusedError`.
 - For filtered ports (blocked by firewall) `connect()` may time out.
 - Timeouts prevent your program from blocking indefinitely — always set them.
 
----
 
-## Phase 2 — Single-port probe & CLI (45 min)
+## Phase 2 — Single-port probe & CLI 
 
-### Task 2.1 — Implement `lab2_probe.py` (single-port checker)
+### Task 2.1 — Implement `lab4-2_probe.py` (single-port checker)
 
-Create `lab2_probe.py`:
+Create `lab4-2_probe.py`:
 
 ```python
 #!/usr/bin/env python3
-# lab2_probe.py
+# lab4-2_probe.py
 import socket, sys
 
 def probe_tcp(host, port, timeout=3.0):
@@ -111,20 +112,20 @@ if __name__ == '__main__':
 
 **Exercises:**
 
-- Run `python lab2_probe.py 127.0.0.1 22` and `python lab2_probe.py 127.0.0.1 9999` and note results.
-- Save outputs and add a short note in `lab2_activity.log` describing what each result means.
+- Run `python lab4-2_probe.py scanme.nmap.org 22` and `python lab4-2_probe.py scanme.nmap.org 9999` and note results.
+- Try a few other common and random ports [List of common ports](https://www.stationx.net/common-ports-cheat-sheet/)
+- Save outputs and add a short note in `lab4-2_activity.log` describing what each result means.
 
----
 
-## Phase 3 — Range scan with concurrency (75 min)
+## Phase 3 — Range scan with concurrency 
 
-### Task 3.1 — Implement `lab2_scan.py` (concurrent range scan)
+### Task 3.1 — Implement `lab4-2_scan.py` (concurrent range scan)
 
-Create `lab2_scan.py`:
+Create `lab4-2_scan.py`:
 
 ```python
 #!/usr/bin/env python3
-# lab2_scan.py
+# lab4-2_scan.py
 import socket, argparse, concurrent.futures, json, time
 
 def probe_tcp(host, port, timeout=2.0):
@@ -185,26 +186,26 @@ if __name__ == '__main__':
 
 **Exercises:**
 
-- Run a small scan: `python lab2_scan.py --host 127.0.0.1 --ports 20-1024 --workers 30 --timeout 1.0`
-- Observe runtime vs. port range vs. workers; record timings in `lab2_activity.log`.
+- Run a small scan: `python lab4-2_scan.py --host scanme.nmap.org --ports 20-1024 --workers 30 --timeout 1.0`
+- Observe runtime vs. port range vs. workers; record timings in `lab4-2_activity.log`.
 - Load `scan_results.json` and identify open ports.
 
 **Talk-through:**
 
-- Increasing `workers` reduces runtime but increases load on both your machine and the target — keep within instructor limits.
+- Increasing `workers` reduces runtime but increases load on both your machine and the target — keep within limits.
 - Very small timeouts risk false negatives on slow services.
+- try running the previous scan with different amounts of workers and various timeouts and record your observations
 
----
 
-## Phase 4 — Banner grabbing & service hints (60 min)
+## Phase 4 — Banner grabbing & service hints 
 
-### Task 4.1 — Implement `lab2_banner.py`
+### Task 4.1 — Implement `lab4-2_banner.py`
 
-Create `lab2_banner.py`:
+Create `lab4-2_banner.py`:
 
 ```python
 #!/usr/bin/env python3
-# lab2_banner.py
+# lab4-2_banner.py
 import socket, sys, json, time
 
 def grab_banner_tcp(host, port, timeout=2.0, send_bytes=None, read_size=1024):
@@ -256,7 +257,7 @@ if __name__ == '__main__':
 
 **Exercises:**
 
-- For each open port found in Phase 3, run `python lab2_banner.py 127.0.0.1 <port>` and save the banner to `banners.csv` or `banners.json`.
+- For each open port found in Phase 3, run `python lab4-2_banner.py scanme.nmap.org <port>` and save the banner to `banners.csv` or `banners.json`.
 - Note common banner strings like `SSH-2.0-OpenSSH_7.6p1`, `220 smtp.example ESMTP`, `HTTP/1.1 200 OK` and `Server:` headers.
 
 **Talk-through:**
@@ -265,20 +266,18 @@ if __name__ == '__main__':
 - Some services disable or hide banners; others return generic banners or nothing at all.
 - Be careful: sending malformed probes can trigger IDS or break poor services — keep probes minimal.
 
----
-
-## Phase 5 — Advanced / Optional (30 min)
+## Phase 5 — Advanced 
 
 ### Optional 5.1 — UDP "probe" (basic)
 
-UDP is connectionless; you can't reliably "connect" to know open/closed. But you can send a packet and look for an ICMP port unreachable response (not possible with plain `socket` reliably without raw sockets). For this lab we'll implement a simple UDP probe that sends a small datagram and waits for a response — useful for DNS (port 53) or other UDP services (if instructor provided).
+UDP is connectionless; you can't reliably "connect" to know open/closed. But you can send a packet and look for an ICMP port unreachable response (not possible with plain `socket` reliably without raw sockets). For this lab we'll implement a simple UDP probe that sends a small datagram and waits for a response — useful for DNS (port 53) or other UDP services.
 
 ```python
 # udp_probe.py (simple)
 import socket, sys
 s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 s.settimeout(2.0)
-host = "127.0.0.1"
+host = "1.1.1.1" #cloudfare dns try using 8.8.8.8 Google dns and also scanme.nmap.org
 port = 53
 s.sendto(b"\x00", (host, port))
 try:
@@ -288,7 +287,7 @@ except socket.timeout:
     print("No reply (could be closed/filtered or service not responding)")
 ```
 
-**Notes:** this is unreliable; instructors should provide a UDP echo or DNS server if testing UDP.
+**Notes:** UDP is unreliable; you'll often get no replies, so filter or not responding is most likley. 
 
 ### Optional 5.2 — Passive hints (TTL and SYN window) — discussion only
 
