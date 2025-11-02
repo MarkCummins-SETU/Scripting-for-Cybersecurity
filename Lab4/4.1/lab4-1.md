@@ -1,4 +1,4 @@
-# Lab 1 — HTTP Basics: Requests, HTML Parsing & Response Analysis 
+# Lab 4 — HTTP Basics: Requests, HTML Parsing & Response Analysis 
 
 In this lab we'll learn foundational web reconnaissance skills in Python — making HTTP requests, parsing HTML, extracting metadata, and analyzing response headers.  
 
@@ -167,22 +167,22 @@ curl -i  https://httpbin.org/headers
 
 Open phase1_notes.txt and append a 4–6 line summary answering:
 
-What three pieces of information from the steps above would be most useful in a reconnaissance report, and why?
+1. What three pieces of information from the steps above would be most useful in a reconnaissance report, and why?
 
-One quick defensive suggestion an admin could use to reduce information leakage from headers.
+2. One quick defensive suggestion an admin could use to reduce information leakage from headers.
 
-End of Phase 1. Save all files (phase1_*.txt, phase1_page.html) into your lab folder — these will be referenced in later labs.
----
+End of Phase 1. Save all files into your lab folder — these will be referenced in later labs.
 
-## Phase 2 — HTTP Requests & Header Analysis (60 min)
+
+## Phase 2 — HTTP Requests & Header Analysis 
 
 ### Task 2.1 — Basic GET with `requests`
 
-Create a file `lab1_get.py`:
+Create a file `lab4-1_get.py`:
 
 ```python
 #!/usr/bin/env python3
-# lab1_get.py
+# lab4-1_get.py
 import requests
 import sys
 
@@ -209,11 +209,12 @@ if __name__ == '__main__':
 
 **Exercises:**
 
-- Run against each lab URL. Observe status codes (200 / 301 / 404 / 500).
+- Run from the terminal commandline python3 lab4-1_get.py http://scanme.nmap.org
+- Run against each lab URL. Observe status codes (200 / 301 / 404 / 500). [http://scanme.nmap.org, http://example.com, http://httpbin.org]
+- Try http and https version of each domain, and not any differences
 - Try non-existent paths (`/thispagedoesnotexist`) and note the behavior.
 - Inspect `Server` header values and discuss what they might reveal.
 
----
 
 ### Task 2.2 — Collecting headers across many pages
 
@@ -221,7 +222,7 @@ Create a script to query a list of URLs and save header summaries to `headers.js
 
 ```python
 #!/usr/bin/env python3
-# lab1_collect_headers.py
+# lab4-1_collect_headers.py
 import requests, json, sys
 
 def collect(urls, out_file="headers.json"):
@@ -253,20 +254,19 @@ if __name__ == '__main__':
 
 **Exercises:**
 
-- Run for all lab targets and view `headers.json`.
+- Run for all lab targets (add a few of your own also) and view `headers.json`.
 - Discuss variations and what is actionable information.
 
----
 
-## Phase 3 — HTML Parsing & Metadata Extraction (75 min)
+## Phase 3 — HTML Parsing & Metadata Extraction 
 
 ### Task 3.1 — Extract title, meta description, and forms
 
-Create `lab1_parse.py`:
+Create `lab4-1_parse.py`:
 
 ```python
 #!/usr/bin/env python3
-# lab1_parse.py
+# lab4-1_parse.py
 from bs4 import BeautifulSoup
 import requests, json, sys, urllib.parse
 
@@ -313,15 +313,13 @@ if __name__ == '__main__':
 
 **Exercises:**
 
-- Run it against each target and save `page_meta.json` files.
+- Run it against each target (and some of your own) and save `page_meta.json` files.
 - Inspect forms: are there login forms? hidden fields? suspicious parameters?
 - Note title and meta descriptions — are they meaningful?
 
----
+### Task 3.2 — Keyword scanning in page text
 
-### Task 3.2 — Keyword scanning in page text (optional)
-
-Add a small keyword search to `lab1_parse.py` to count occurrences of keywords like `admin`, `login`, `debug`, `error`.
+Add a small keyword search to `lab4-1_parse.py` to count occurrences of keywords like `admin`, `login`, `debug`, `error`.
 
 ```python
 keywords = ["admin", "login", "debug", "error"]
@@ -330,19 +328,20 @@ kw_counts = {k: text.count(k) for k in keywords}
 result["keyword_counts"] = kw_counts
 ```
 
-**Exercise:** Run and compare counts across different lab sites.
+> Add the above code just below the result = section.. around line 35
 
----
+**Exercise:** Run and compare counts across different sites.
 
-## Phase 4 — Header Fuzzing & Hidden Clues (45 min)
+
+## Phase 4 — Header Fuzzing & Hidden Clues 
 
 ### Task 4.1 — User-Agent variation
 
-Create `lab1_header_probe.py`:
+Create `lab4-1_header_probe.py`:
 
 ```python
 #!/usr/bin/env python3
-# lab1_header_probe.py
+# lab4-1_header_probe.py
 import requests, sys, csv
 
 USER_AGENTS = [
@@ -388,9 +387,11 @@ if __name__ == '__main__':
 - Run the probe and observe differences in `status`, `server`, and `length`.
 - Does the server respond differently to `curl`, `sqlmap`, or `Nikto` user agents?
 
+> sqlmap and nikto are common web hacking / scanning tools so wouldn't be unusal to see sites protected against them.
+
 ---
 
-### Task 4.2 — Additional header tests (optional)
+### Task 4.2 — Additional header tests
 
 Try fuzzing or adding headers such as:
 
@@ -400,11 +401,10 @@ Try fuzzing or adding headers such as:
 
 **Exercise:** Log any changes in response status, body, or headers.
 
----
 
-## Phase 5 — Reflection & submission (30 min)
+## Phase 5 — Reflection & submission 
 
-Create `lab1_README.md` (max 400 words) addressing:
+Create `lab4-1_README.md` (max 400 words) addressing:
 
 - Which server headers you observed — were they helpful?
 - Differences between the target sites in headers, titles, forms, and keywords.
@@ -415,36 +415,19 @@ Create `lab1_README.md` (max 400 words) addressing:
 
 ## Deliverables (what to submit)
 
-Include in your submission folder:
+Include in your github lab 4 folder:
 
-- `lab1_get.py`  
-- `lab1_collect_headers.py` (or combined script)  
-- `lab1_parse.py`  
-- `lab1_header_probe.py`  
+- `lab4-1_get.py`  
+- `lab4-1_collect_headers.py` (or combined script)  
+- `lab4-1_parse.py`  
+- `lab4-1_header_probe.py`  
 - `headers.json` and/or `page_meta.json` produced during the lab  
-- `lab1_README.md` (reflection and notes)
+- `lab4-1_README.md` (reflection and notes)
 
----
 
-## Hints & common pitfalls
-
-- Always set a timeout on network calls (`timeout=5`) to avoid long blocking waits.
-- Use `allow_redirects=True` if you want the final landing page; check `response.history` to see redirects.
-- Catch `requests.exceptions.RequestException` to handle connection errors, timeouts, and other problems.
-- When joining relative form `action` attributes, use `urllib.parse.urljoin(base, action)`.
-- Be mindful of lab rules: low worker counts, no scans against external networks, keep logs.
-
----
-
-## Optional extension ideas (if you finish early)
+## Optional extension ideas 
 
 - Detect common web frameworks via headers or URL paths (e.g., `X-Powered-By`, `/wp-login.php` → WordPress).
 - Save a simple HTML snapshot of each page to a `snapshots/` folder for offline comparison.
 - Add CLI flags to output JSON pretty-print or compact mode.
 - Implement a small report generator that reads `headers.json` and `page_meta.json` and produces a Markdown summary.
-
----
-
-If you'd like, I can:
-- provide a zipped starter repo with all starter scripts and a `requirements.txt`, or  
-- convert this Markdown into a ready-to-commit `lab1/README.md` in the canvas document. Which do you prefer?
