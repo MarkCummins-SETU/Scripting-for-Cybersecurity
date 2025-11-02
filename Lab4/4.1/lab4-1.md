@@ -24,47 +24,207 @@ By the end of this lab you should be able to:
 
 ---
 
-## Time plan (approx.)
+## Initial Lab setup
 
-| Phase | Activity | Time |
-|-------|----------|------|
-| 1 | Setup & warm-up | 30 min |
-| 2 | HTTP requests & header analysis | 60 min |
-| 3 | HTML parsing & metadata extraction | 75 min |
-| 4 | Header fuzzing & optional challenges | 45 min |
-| 5 | Reflection & submission prep | 30 min |
+1. Create and activate a new codespace virtual environment:
 
----
-
-## Pre-lab setup
-
-1. Create and activate a virtual environment:
-   ```bash
-   python3 -m venv venv
-   source venv/bin/activate     # Windows: venv\Scripts\activate
-   ```
-
-2. Install dependencies:
+2. Install dependencies from the terminal:
    ```bash
    pip install requests beautifulsoup4
    ```
 
-3. Confirm you can reach the lab targets provided by the instructor. Example quick test:
+3. Confirm you can reach the lab targets. Example quick test:
    ```python
    import requests
-   r = requests.get("http://localhost:8001")
+   r = requests.get("http://scanme.namp.org")
    print(r.status_code)
    ```
 
-> Instructor note: provide 2–3 local web apps (e.g. `http://localhost:8001`, `http://localhost:8002/login`, `http://localhost:8003/blog`) with slight variations in headers, meta tags and forms so students observe differences.
+> Check out the meaning of the returned [status code](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes). 
 
 ---
 
-## Phase 1 — Warm-up & small demo (30 min)
+## Phase 1 — Warm-up: Guided Step-by-Step Exercises 
 
-- Instructor demo: run `curl -I http://localhost:8001` and `curl http://localhost:8001` to show headers and body.
-- Quick Python demo (interactive) showing `requests.get()` and printing `response.status_code`, `response.headers`, and `response.text[:200]`.
+Follow these steps, and run each listed command, record the results, and answer the short questions after each step in a text file called **phase1_notes.txt**  
 
+The curl -i command is used to include the HTTP response headers in the output when making an HTTP request.
+
+🔍 Breakdown
+
+Normally, when you run:
+
+curl https://example.com
+
+
+You only get the response body — the content returned by the server (like HTML, JSON, etc.).
+
+But when you add the -i (or --include) flag:
+
+curl -i https://example.com
+
+
+you get both the headers and the body, for example:
+
+HTTP/1.1 200 OK
+Date: Sat, 02 Nov 2025 16:25:00 GMT
+Content-Type: text/html; charset=UTF-8
+Content-Length: 1256
+Connection: keep-alive
+Server: Apache
+
+<!doctype html>
+<html>
+<head>...</head>
+<body>...</body>
+</html>
+
+🧩 Explanation
+Part	Description
+HTTP/1.1 200 OK	The status line (protocol, status code, and message).
+The lines that follow (e.g. Date:, Content-Type:)	The HTTP headers — metadata about the response.
+The blank line	Marks the end of headers.
+The rest (HTML/JSON/etc.)	The response body.
+🧠 Common Uses
+
+Debugging HTTP responses
+To inspect what headers the server sends (cookies, content type, caching info, etc.)
+
+Checking redirect behavior (use with -L to follow redirects)
+
+API testing, to see full metadata from REST endpoints.
+
+⚙️ Related Options
+Option	Purpose
+-I or --head	Fetch only the headers (no body).
+-v or --verbose	Show full request and response (headers, connection info, etc.).
+-s	Silent mode (no progress meter). Often combined as -sI for script use.
+✅ Example
+curl -i https://api.github.com
+
+
+Output (trimmed):
+
+HTTP/2 200
+server: github.com
+content-type: application/json; charset=utf-8
+...
+
+{
+  "current_user_url": "https://api.github.com/user",
+  ...
+}
+
+
+Step 1 — Quick HTTP header check with curl 
+
+Run:
+
+curl -I http://localhost:8001
+
+
+Save the exact output to phase1_curl_headers.txt.
+
+What to look for / talk-through:
+
+The first line shows the HTTP status (e.g. HTTP/1.1 200 OK or HTTP/1.1 301 Moved Permanently). That tells you whether the request succeeded or was redirected.
+
+Server: often reveals the web server software (e.g. nginx/1.18.0, Apache/2.4.41). This is a quick fingerprint.
+
+Content-Type: tells you what kind of payload to expect (HTML, JSON, etc.).
+
+Location: appears on redirects and shows the new URL the client should follow.
+
+Questions to answer in phase1_notes.txt:
+
+What status line did you get and what does it mean?
+
+What is the Server header value? Is it specific (nginx/1.22) or generic?
+
+Step 2 — Fetch the full page body (5 min)
+
+Run:
+
+curl http://localhost:8001 -o phase1_page.html
+head -n 40 phase1_page.html
+
+
+Inspect the saved file and copy the first 10 non-empty lines into phase1_page_head.txt.
+
+What to look for / talk-through:
+
+The body contains the HTML — look for <title>, visible headings (<h1>, <h2>), and any obvious forms (<form ...>).
+
+If the page is empty or a JSON blob, the Content-Type you saw earlier should explain that.
+
+If curl returned a redirect previously, the saved page may be the redirected destination.
+
+Questions to answer:
+
+What is the <title> of the page (if present)?
+
+Do you see any <form> elements? What are their action attributes (copy them)?
+
+Step 3 — Compare curl and requests (10 min)
+
+Run this quick Python snippet and save output to phase1_requests_output.txt:
+
+# run in an activated venv with requests installed
+import requests
+r = requests.get("http://localhost:8001", timeout=5)
+print("Status:", r.status_code)
+print("Final URL:", r.url)
+print("Server header:", r.headers.get("Server"))
+print("Content-Type:", r.headers.get("Content-Type"))
+print("First 200 chars of body:\\n", r.text[:200].replace('\n','\\n'))
+
+
+Paste the printed output into phase1_requests_output.txt.
+
+What to look for / talk-through:
+
+Compare the Status and Final URL with the curl results. requests follows redirects by default; curl -I does not unless you use -L.
+
+The Server header in Python should match the curl output; mismatches indicate different server behavior depending on client.
+
+The start of the body helps confirm the page content and encoding.
+
+Questions to answer:
+
+Did requests and curl report the same status and server header?
+
+If different, what header or other factor might explain it (redirects, default headers, user agent)?
+
+Step 4 — Inspect headers with a different User-Agent (5 min)
+
+Run:
+
+curl -I -A "sqlmap/1.5" http://localhost:8001
+
+
+Save output to phase1_ua_sqlmap.txt.
+
+What to look for / talk-through:
+
+Some servers change behavior based on the User-Agent. They may block, redirect, or return different content-lengths.
+
+Web application firewalls or simple server rules sometimes detect known scanning agents and respond differently.
+
+Questions to answer:
+
+Did the response change (status, server header, content-length) when the User-Agent was sqlmap/1.5?
+
+If it changed, what could that mean about the server’s defenses?
+
+Step 5 — Short synthesis (5 min)
+
+Open phase1_notes.txt and append a 4–6 line summary answering:
+
+What three pieces of information from the steps above would be most useful in a reconnaissance report, and why?
+
+One quick defensive suggestion an admin could use to reduce information leakage from headers.
+
+End of Phase 1. Save all files (phase1_*.txt, phase1_page.html) into your lab folder — these will be referenced in later labs.
 ---
 
 ## Phase 2 — HTTP Requests & Header Analysis (60 min)
