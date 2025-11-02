@@ -31,15 +31,15 @@
 - Work on Assignment 2
 
 ### Week 9 : Beginnering 3/11/2025
-- [Lab 4.1 HTTP Basics: Requests, HTML Parsing & Response Analysis](https://github.com/MarkCummins-SETU/Scripting-for-Cybersecurity/blob/main/Lab3/4.1/lab4-1.md)
+- [Lab 4.1 HTTP Basics: Requests, HTML Parsing & Response Analysis](https://github.com/MarkCummins-SETU/Scripting-for-Cybersecurity/blob/main/Lab4/4.1/lab4-1.md)
 
 
 ### Week 10 : Beginnering 10/11/2025
-- [Lab 4.2 Sockets & Port Probing](https://github.com/MarkCummins-SETU/Scripting-for-Cybersecurity/blob/main/Lab3/4.2/lab4-2.md)
+- [Lab 4.2 Sockets & Port Probing](https://github.com/MarkCummins-SETU/Scripting-for-Cybersecurity/blob/main/Lab4/4.2/lab4-2.md)
 
 
   ### Week 11 : Beginnering 17/11/2025
-- [Lab 4.3 TLS Certificates & Basic Fingerprinting](https://github.com/MarkCummins-SETU/Scripting-for-Cybersecurity/blob/main/Lab3/4.3/lab4-3.md)
+- [Lab 4.3 TLS Certificates & Basic Fingerprinting](https://github.com/MarkCummins-SETU/Scripting-for-Cybersecurity/blob/main/Lab4/4.3/lab4-3.md)
 
 
   ### Week 12 : Beginnering 24/11/2025
