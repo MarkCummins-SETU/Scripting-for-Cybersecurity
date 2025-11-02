@@ -85,7 +85,7 @@ On the terminal in your codespace try run:
 curl -I http://scanme.nmap.org
 ```
 
-**What to look for: **  
+**What to look for:**  
 
 - The first line shows the HTTP status (e.g. HTTP/1.1 200 OK or HTTP/1.1 301 Moved Permanently). That tells you whether the request succeeded or was redirected.  
 - Server: often reveals the web server software (e.g. nginx/1.18.0, Apache/2.4.41). This is a quick fingerprint.  
