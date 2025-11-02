@@ -268,7 +268,7 @@ if __name__ == '__main__':
 
 ## Phase 5 — Advanced 
 
-### Optional 5.1 — UDP "probe" (basic)
+### Task 5.1 — UDP "probe" (basic)
 
 UDP is connectionless; you can't reliably "connect" to know open/closed. But you can send a packet and look for an ICMP port unreachable response (not possible with plain `socket` reliably without raw sockets). For this lab we'll implement a simple UDP probe that sends a small datagram and waits for a response — useful for DNS (port 53) or other UDP services.
 
@@ -289,23 +289,74 @@ except socket.timeout:
 
 **Notes:** UDP is unreliable; you'll often get no replies, so filter or not responding is most likley. 
 
-### Optional 5.2 — Passive hints (TTL and SYN window) — discussion only
+### Task 5.2 — Passive hints (TTL and SYN window) — discussion only
 
 - Observing TTL and TCP window sizes from SYN/ACK can offer OS/service hints, but requires raw packets or `scapy` and more privileges. For this lab, discuss trade-offs and ethical concerns. If the instructor permits, you can try a `scapy` exercise in a follow-up session.
 
----
 
-## Phase 6 — Wrap-up, saving outputs & reflection (10 min)
 
-**Files to save in `lab2/` folder:**
 
-- `lab2_probe.py`  
-- `lab2_scan.py`  
-- `lab2_banner.py`  
-- `scan_results.json` (from `lab2_scan.py`)  
+## Task 5.1 — Improved UDP probing (reliable-ish checks for UDP services)
+
+**Goal:** Send protocol-appropriate UDP packets to candidate ports (e.g., DNS port 53, NTP 123) and interpret responses; use ICMP “port unreachable” indications where possible. This exercise uses normal UDP sockets (no raw sockets required) and an optional raw-socket helper (requires root) to listen for ICMP unreachable messages for better detection.
+
+> The scripts need to run as `root` (use `sudo`).
+
+## Task 5.3 — Simple UDP probe (stateless, quick) — works for services that respond (DNS, echo)
+
+**Script:** `udp_probe_simple.py`
+```python
+#!/usr/bin/env python3
+# udp_probe_simple.py
+import socket, sys, time
+
+def udp_probe(host, port, payload=b"\x00", timeout=2.0):
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    s.settimeout(timeout)
+    try:
+        start = time.time()
+        s.sendto(payload, (host, port))
+        data, addr = s.recvfrom(4096)
+        elapsed = time.time() - start
+        return {"host": host, "port": port, "reply": data[:200].hex() if isinstance(data, bytes) else str(data), "elapsed": elapsed}
+    except socket.timeout:
+        return {"host": host, "port": port, "reply": None, "elapsed": None}
+    except Exception as e:
+        return {"host": host, "port": port, "error": str(e)}
+
+if __name__ == "__main__":
+    if len(sys.argv) < 3:
+        print("Usage: python udp_probe_simple.py <host> <port> [hex_payload]")
+        sys.exit(1)
+    host = sys.argv[1]
+    port = int(sys.argv[2])
+    payload = bytes.fromhex(sys.argv[3]) if len(sys.argv) > 3 else b"\x00"
+    print(udp_probe(host, port, payload))
+```
+
+**How to run (student):**
+```bash
+python udp_probe_simple.py 1.1.1.1 53
+python udp_probe_simple.py 1.1.11 53 "0000010000010000000000000377777706676f6f676c6503636f6d0000010001"
+```
+
+**What to record:**
+- Save output to `udp_simple_results.json`.
+- Note whether a reply was received.
+- Try decode the sent and recieved hex to see what was sent.
+
+
+## Phase 6 — Wrap-up, saving outputs & reflection 
+
+**Files to save in `lab4-2/` folder:**
+
+- `lab4-2_probe.py`  
+- `lab4-2_scan.py`  
+- `lab4-2_banner.py`  
+- `scan_results.json` (from `lab4-2_scan.py`)  
 - `banners.csv` or `banners.json` (banner outputs)  
-- `lab2_activity.log` (notes: commands run, timings, anomalies)  
-- `lab2_README.md` — short reflection (max 400 words) answering:
+- `lab4-2_activity.log` (notes: commands run, timings, anomalies)  
+- `lab4-2_README.md` — short reflection (max 400 words) answering:
   - What open ports did you find, and which banners were most informative?
   - Any false negatives or timeouts encountered? Why?
   - One defensive recommendation for an admin to reduce information leakage.
@@ -318,39 +369,20 @@ host,port,service_hint,banner_snippet
 127.0.0.1,80,HTTP,"HTTP/1.1 200 OK\nServer: nginx/1.18"
 ```
 
----
-
 ## Hints & common pitfalls
 
 - Always set timeouts; default blocking sockets can hang your script.
-- Use conservative defaults for `workers` (instructor may require <50).
+- Use conservative defaults for `workers` (<50).
 - JSON is easier to parse for autograding; CSV is easy to view.
 - `ConnectionRefusedError` vs `timeout` — different meanings: refused = remote host replies “no service”; timeout = likely filtered or very slow.
 - Banner grabbing must be light: one small request and a short read (`recv(1024)`).
 
----
-
-## Optional extensions (if time remains or for homework)
+## Optional extensions 
 
 - Add **service fingerprinting heuristics**: match banners or header keywords to known services (e.g., `nginx`, `OpenSSH`, `Postfix`) and produce `service_hint`.
-- Add **parallel banner grabbing** after scan results in `lab2_scan.py` to speed-up collection (use same `ThreadPoolExecutor`).
+- Add **parallel banner grabbing** after scan results in `lab4-2_scan.py` to speed-up collection (use same `ThreadPoolExecutor`).
 - Implement **rate limiting** between requests to a single host (sleep per N requests).
 - Build a small **report generator** that reads `scan_results.json` and `banners.json` and outputs a Markdown summary.
 
----
 
-## Example quick commands (cheat-sheet)
-
-```bash
-# single probe
-python lab2_probe.py 127.0.0.1 22
-
-# scan a small range
-python lab2_scan.py --host 127.0.0.1 --ports 20-1024 --workers 40 --timeout 1.0 --out scan_results.json
-
-# banner for a port
-python lab2_banner.py 127.0.0.1 80 > banner_80.txt
-```
-
----
 
