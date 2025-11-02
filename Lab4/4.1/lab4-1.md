@@ -98,8 +98,9 @@ curl -I http://scanme.nmap.org
 
 2. What is the Server header value? Is it specific (nginx/1.22) or generic?
 
-
+   
 ### Step 2 — Fetch the full page body
+
 
 On the terminal in your codespace try run:
 ```bash
