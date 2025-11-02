@@ -99,7 +99,7 @@ curl -I http://scanme.nmap.org
 2. What is the Server header value? Is it specific (nginx/1.22) or generic?
 
    
-### Step 2 — Fetch the full page body
+### Step 2 — Fetch the full page body
 
 
 On the terminal in your codespace try run:
@@ -114,7 +114,7 @@ head -n 40 scanme.html
 
 1. What is the <title> of the page (if present)?
 
-2. Do you see any <form> elements? What are their action attributes (copy them)?
+2. Do you see any ```<form>``` elements? What are their action attributes (copy them)?
 
 ### Step 3 — Compare curl and requests 
 
