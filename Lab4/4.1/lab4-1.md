@@ -202,7 +202,7 @@ def simple_get(url):
 
 if __name__ == '__main__':
     if len(sys.argv) < 2:
-        print("Usage: python lab1_get.py <url>")
+        print("Usage: python lab4-1_get.py <url>")
         sys.exit(1)
     simple_get(sys.argv[1])
 ```
