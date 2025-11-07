@@ -114,7 +114,7 @@ head -n 40 scanme.html
 
 1. What is the <title> of the page (if present)?
 
-2. Do you see any ```<form>``` elements? What are their action attributes (copy them)?
+2. Do you see any ```<form>``` elements? (Check the full file, not just the first 10 oe 40 lines)  What are their action attributes (copy them)?
 
 ### Step 3 — Compare curl and requests 
 
