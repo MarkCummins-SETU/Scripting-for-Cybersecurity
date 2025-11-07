@@ -33,7 +33,7 @@ By the end of this lab you should be able to:
 3. Confirm you can reach the lab targets. Example quick test:
    ```python
    import requests
-   r = requests.get("http://scanme.namp.org")
+   r = requests.get("http://scanme.nmap.org")
    print(r.status_code)
    ```
 
@@ -104,7 +104,7 @@ curl -I http://scanme.nmap.org
 
 On the terminal in your codespace try run:
 ```bash
-curl http://scanme.nmap.org-o scanme.html
+curl http://scanme.nmap.org -o scanme.html
 head -n 40 scanme.html
 ```
 
