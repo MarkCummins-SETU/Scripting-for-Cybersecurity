@@ -146,7 +146,7 @@ print("First 200 chars of body:\\n", r.text[:200].replace('\n','\\n'))
 
 ### Step 4 — Inspect headers with a different User-Agent 
 
-> Run this quick Python snippet and save output to phase1_requests_output.txt:
+> Run this quick commandline snippet and save output to phase1_requests_output.txt:
 ```bash
 curl -i  -A "MyTestAgent/1.0" https://httpbin.org/headers
 curl -i  https://httpbin.org/headers
@@ -328,7 +328,7 @@ kw_counts = {k: text.count(k) for k in keywords}
 result["keyword_counts"] = kw_counts
 ```
 
-> Add the above code just below the result = section.. around line 35
+> Add the above code just below the "result = { ...}" section.. around line 35
 
 **Exercise:** Run and compare counts across different sites.
 
