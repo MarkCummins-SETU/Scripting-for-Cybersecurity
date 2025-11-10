@@ -98,7 +98,7 @@ def probe_tcp(host, port, timeout=3.0):
 
 if __name__ == '__main__':
     if len(sys.argv) < 3:
-        print("Usage: python lab2_probe.py <host> <port> [timeout]")
+        print("Usage: python lab4-2_probe.py <host> <port> [timeout]")
         sys.exit(1)
     host = sys.argv[1]
     port = sys.argv[2]
