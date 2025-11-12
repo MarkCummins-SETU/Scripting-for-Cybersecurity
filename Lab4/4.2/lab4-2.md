@@ -291,7 +291,7 @@ except socket.timeout:
 
 ### Task 5.2 — Passive hints (TTL and SYN window) — discussion only
 
-- Observing TTL and TCP window sizes from SYN/ACK can offer OS/service hints, but requires raw packets or `scapy` and more privileges. For this lab, discuss trade-offs and ethical concerns. If the instructor permits, you can try a `scapy` exercise in a follow-up session.
+- Observing TTL and TCP window sizes from SYN/ACK can offer OS/service hints, but requires raw packets or `scapy` and more privileges. For this lab, discuss trade-offs and ethical concerns. We might try a `scapy` exercise in a follow-up session.
 
 
 
