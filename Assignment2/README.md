@@ -30,15 +30,15 @@
 Implement recon.py with these flags and behaviors. Use argparse or equivalent.
 
 Basic required flags (Must implement these exactly. As many as you can):
-
---targets PATH         Path to file (one host per line; allow host or host:port)
---ports PORTS          Comma list or ranges (e.g., 80,443,8000-8100)
---workers N            Concurrent TCP workers (default 20)
---http                 If set: probe discovered HTTP(S) services and extract title, meta description, Server header
---tls                  If set: attempt TLS retrieval for ports that speak TLS
---output PREFIX        Path prefix for results; tool writes PREFIX.results.json and PREFIX.results.csv
---timeout S            Per-connection timeout in seconds (float OK)
-
+```
+--targets PATH         Path to file (one host per line; allow host or host:port)  
+--ports PORTS          Comma list or ranges (e.g., 80,443,8000-8100)  
+--workers N            Concurrent TCP workers (default 20)  
+--http                 If set: probe discovered HTTP(S) services and extract title, meta description, Server header  
+--tls                  If set: attempt TLS retrieval for ports that speak TLS  
+--output PREFIX        Path prefix for results; tool writes PREFIX.results.json and PREFIX.results.csv  
+--timeout S            Per-connection timeout in seconds (float OK)  
+```
 
 ## Implement as much of the following functionality:
 
