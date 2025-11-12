@@ -106,7 +106,7 @@ Students may not call external binaries (nmap/masscan/nikto). They may use Pytho
 
 ## Output schema (example — minimal required fields)
 JSON: top-level object
-
+```
 {
   "meta": {
     "run_started": "2025-11-12T12:34:56Z",
@@ -142,7 +142,7 @@ JSON: top-level object
     }
   }
 }
-
+```
 CSV: one row per (host,port)
 Columns (must include): host,port,open,status_code,title,server_header,cert_subject_cn,cert_notAfter,banner_snippet,fingerprint_tags
 
