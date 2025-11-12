@@ -19,8 +19,6 @@ Implement a command-line Python program named recon.py with the following functi
 --output : path prefix for results; produce results.json and results.csv.
 
 --timeout : per-connection timeout in s
-ChatGPT said:
-Nice — makes sense. Below is a harder, production-quality project specification for your 2nd-year cybersecurity class. I’m being direct: this version forces students to think like an engineer (concurrency, resilience, real output schema, testing, packaging) and like an analyst (fingerprinting, TLS checks, evidence collection, ethics). Use it as-is or copy/paste into your LMS.
 
 # Recon tool — Project specification
 
