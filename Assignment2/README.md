@@ -18,7 +18,7 @@
 1. recon.py (executable CLI entry point)
 2. requirements.txt (List any packages to be included)
 3. README.md with quickstart and examples
-4. AUTHORISATION.txt (see above)
+4. AUTHORISATION.txt (see below)
 5. Example targets.txt used in testing
 6. results.json and results.csv produced by your tool on the example targets
 7. STYLE.md (short paragraph on design decisions & known limitations)
