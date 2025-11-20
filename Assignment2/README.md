@@ -9,27 +9,43 @@
 - **Feel free to ask me questions (In labs, lecture or online)**  
 - **Remeember sloppy tools that “worked on my machine” are worthless**
 
-> You should use the sample code from the labs, however marks will only be awards for additional functionality added to the lab code.
+> You should use the sample code from the labs, however most marks will only be awards for additional functionality added to the lab code.
 
+## Step-by-step Checklist for Assignment 2
+1. Created a new private repository on github
+2. Invite mark.cummins@setu.ie as a collaborator on your assignment repository
+3. In your new repository
+   - Include a README.md with basic details about your project, how to start program etc.
+   - Include the AUTHORISATION.txt file
+   - Include a targets.txt file listing any targets used for testing
+   - Include the output from your script (results.json and results.csv)
+   - Include your main script recon.py (executable CLI entry point)
+   - A short video demo (max 5 minutes)
 
+## What to Submit? 
+On Blackboard you should just submit the github link to your project REPO. You need to ensure that you submit the link on Blackboard and not just assume its done because youve added me as a collaborator.
 
-## Required deliverables (every student) - A git repository with:
+You also need to include alink to your project Video. I need to have access! 
 
-1. recon.py (executable CLI entry point)
-2. requirements.txt (List any packages to be included)
-3. README.md with quickstart and examples
-4. AUTHORISATION.txt (see above)
-5. Example targets.txt used in testing
-6. results.json and results.csv produced by your tool on the example targets
-7. STYLE.md (short paragraph on design decisions & known limitations)
-8. A short video demo (max 5 minutes) showing the tool running on the example targets and explaining outputs, and program features.
-9. Project Report, in got Repo, but also submitted to Blackboard with all required sections.
+## Project Report
+Your README.md file in the repository should be where you add all documentation for the assignment. This will be the report part of the project, so you shouldn't create a seperate report, just include everything in the README.md
+
+Details that must be included in your README.txt. (Pretend it's a random person on the internet who finds your repository)
+
+- Project Overview : What is this project, what does it attempt to do etc. 
+- Requirements : List what libraries etc are needed to run your code.
+- Running the code : detail how the code should be run
+- Features: Clearly outline all features implemented (or attempted), and what exactly they do. 
+- Reflection on project, how difficult was it, what you learned or struglled with etc. What could be improved etc.
+
+## Project Video
+You need to include a link to your video demo (Your video demo is in place of the one-to-one lab demos we did for assignment 1). Your video should briefly introduce your project, and show you running and demonstrating each feature talking through what your program does/doesn't do etc. Sell it! be proud of what you've done and show it off. Show the tool running on the example targets and explaining outputs, and program features.
 
 
 ## Program behavior & CLI flags
 Implement recon.py with these flags and behaviors. Use argparse or equivalent.
 
-Basic required flags (Must implement these exactly. As many as you can):
+Basic required flags (Implement these exactly, as many as you can):
 ```
 --targets PATH         Path to file (one host per line; allow host or host:port)  
 --ports PORTS          Comma list or ranges (e.g., 80,443,8000-8100)  
@@ -38,6 +54,84 @@ Basic required flags (Must implement these exactly. As many as you can):
 --tls                  If set: attempt TLS retrieval for ports that speak TLS  
 --output PREFIX        Path prefix for results; tool writes PREFIX.results.json and PREFIX.results.csv  
 --timeout S            Per-connection timeout in seconds (float OK)  
+```
+> Look at Lab 4.2, Task 3.1 for example of parsings input arguments.
+
+> To get started I'd suggest parsig each of the options and just printing out the arguement so you know you are parsing it correctly.
+
+> Then try add each feature one by one, completing whichever you think are easiest. 
+
+**Quick Example**
+```python
+#!/usr/bin/env python3
+import argparse
+
+def parse_args():
+    parser = argparse.ArgumentParser(
+        description="Example argparse parser for network scanning flags"
+    )
+
+    parser.add_argument(
+        "--targets",
+        required=True,
+        help="Path to file (one host per line; allow host or host:port)",
+    )
+
+    parser.add_argument(
+        "--ports",
+        required=True,
+        help="Comma list or ranges (e.g., 80,443,8000-8100)",
+    )
+
+    parser.add_argument(
+        "--workers",
+        type=int,
+        default=20,
+        help="Concurrent TCP workers (default 20)",
+    )
+
+    parser.add_argument(
+        "--http",
+        action="store_true",
+        help="Probe HTTP(S) services and extract title, meta description, Server header",
+    )
+
+    parser.add_argument(
+        "--tls",
+        action="store_true",
+        help="Attempt TLS retrieval for ports that speak TLS",
+    )
+
+    parser.add_argument(
+        "--output",
+        help="Path prefix for results; tool writes PREFIX.results.json and PREFIX.results.csv",
+    )
+
+    parser.add_argument(
+        "--timeout",
+        type=float,
+        default=5.0,
+        help="Per-connection timeout in seconds (float OK)",
+    )
+
+    return parser.parse_args()
+
+
+def main():
+    args = parse_args()
+    print("Arguments Received:")
+    print(f"  targets : {args.targets}")
+    print(f"  ports   : {args.ports}")
+    print(f"  workers : {args.workers}")
+    print(f"  http    : {args.http}")
+    print(f"  tls     : {args.tls}")
+    print(f"  output  : {args.output}")
+    print(f"  timeout : {args.timeout}")
+
+
+if __name__ == "__main__":
+    main()
+
 ```
 
 ## Implement as much of the following functionality:
@@ -202,10 +296,3 @@ I certify that I had explicit permission to run this tool against all submitted 
 
 > nmap.scanme.org, example.com are both acceptable targets, if you use anything else then include evidence that you have permission to scan the site.
 
-## Project Report
-Details that must be included in report.
-- Title page
-- Link to Github Repo (Private + add me)
-- References
-- Clearly outline features implemented or attempted.
-- Reflection on project, how difficult was it, what you learned or struglled with etc.
