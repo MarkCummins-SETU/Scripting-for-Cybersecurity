@@ -7,7 +7,7 @@
 - **Don't panic. Start with the sample code from the labs, and add one function/feature at a time. Make sure it works well then try add another. Small Steps**
 - **Do your best, Implement as much as you can**
 - **Feel free to ask me questions (In labs, lecture or online)**  
-- **Remeember sloppy tools that “worked on my machine” are worthless**
+- **Remember sloppy tools that “worked on my machine” are worthless**
 
 > You should use the sample code from the labs, however most marks will only be awards for additional functionality added to the lab code.
 
